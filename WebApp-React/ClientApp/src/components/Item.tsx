@@ -1,6 +1,4 @@
 ﻿import * as React from 'react'
-import { Box, Grid, GridItem, IconButton } from '@chakra-ui/react'
-import { DeleteIcon } from '@chakra-ui/icons'
 import { ContentItem } from '../models/ContentItem'
 
 

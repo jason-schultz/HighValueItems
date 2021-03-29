@@ -1,7 +1,6 @@
-﻿import { ContentItem } from '../models/ContentItem'
+﻿import React from 'react'
+import { ContentItem } from '../models/ContentItem'
 import Item from './Item'
-import React from 'react'
-import { Box } from '@chakra-ui/react'
 import CategoryHeader from './CategoryHeader'
 
 type ItemListProps = {

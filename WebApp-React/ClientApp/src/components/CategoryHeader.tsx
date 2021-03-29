@@ -1,4 +1,3 @@
-import { Grid, GridItem, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { ContentItem } from '../models/ContentItem'
 

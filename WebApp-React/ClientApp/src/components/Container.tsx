@@ -1,5 +1,4 @@
 ﻿import React, { useCallback, useEffect, useState } from 'react'
-import { Box, useToast } from '@chakra-ui/react'
 import { ContentItem } from '../models/ContentItem'
 import API from '../services/service'
 import AddItem from './AddItem'
