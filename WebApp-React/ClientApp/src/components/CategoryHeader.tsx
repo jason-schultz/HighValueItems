@@ -12,15 +12,15 @@ const getTotal = (arr: Array<ContentItem>) => {
 
 const CategoryHeader = ({text, items}: CategoryHeaderProps) => {
    
-    return (
-        <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-            <GridItem colSpan={2}>
-                <Heading id="name" fontSize="xl" fontWeight="semibold">{text}</Heading>
-            </GridItem>
-            <GridItem colSpan={2} >
-                <Text id="value" fontWeight="bold" fontStyle="italic">${getTotal(items)}</Text>
-            </GridItem>
-        </Grid>
+    return (<></>
+        // <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+        //     <GridItem colSpan={2}>
+        //         <Heading id="name" fontSize="xl" fontWeight="semibold">{text}</Heading>
+        //     </GridItem>
+        //     <GridItem colSpan={2} >
+        //         <Text id="value" fontWeight="bold" fontStyle="italic">${getTotal(items)}</Text>
+        //     </GridItem>
+        // </Grid>
     )
 }
 

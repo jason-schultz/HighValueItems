@@ -6,13 +6,13 @@ import Header from '../components/Header';
 function App() {
 
   return (
-    <Box maxW="xl" maxH="xl">
+    <div className="container mx-auto">
       <Header />
           <div style={{
             position: 'absolute', left: '50%',transform: 'translate(-50%)' }}>
-              <Container />
+              {/* <Container /> */}
           </div>
-    </Box>
+    </div>
   );
 }
 

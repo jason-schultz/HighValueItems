@@ -1,83 +1,27 @@
-﻿import React, { FormEvent, useState } from 'react'
-import { ContentItem } from '../models/ContentItem'
+﻿import React, { FormEvent, useContext, useState } from 'react'
+import { ContentItemContext } from '../contexts/contenItemContext'
+import { ContentItem, ContentItemContextType } from '../models/ContentItem'
 
-type AddItemProps = {
-    addContentItem: (item: ContentItem) => void
-}
+const AddItem = () => {
+   const { saveItem } = useContext(ContentItemContext) as ContentItemContextType
+   const [ formData, setFormData ] = useState<ContentItem | {}>()
 
+   const handleFormData = (e: FormEvent<HTMLInputElement>): void => {
+       setFormData({
+           ...formData,
+           [e.currentTarget.id]: e.currentTarget.value
+       })
+   }
 
-const AddItem = ({addContentItem}: AddItemProps) => {
-    //  useState hook to keep track of the item values.
-    const [item, setItem] = useState<ContentItem>({
-        name: "",
-        value: 0,
-        category: ""
-    } as ContentItem)
-
-    const toast = useToast()
-
-    const handleAdd = (item: ContentItem) => {
-        return Object.keys(item).map((key:string) => {
-            if(key === 'name' || key === 'category')
-            {
-                if(item[key] === "") 
-                {
-                    toast({
-                        position: 'top',
-                        duration: 5000,
-                        isClosable: true,
-                        description: `Please enter a value for ${key}`,
-                        status: 'error'
-                    })
-
-                    return false
-                }
-            }
-            return true
-        })
-    }
-
-    const handleSubmit = (e: FormEvent) => {
-        //  Prevent default form submit from firing
-        e.preventDefault()
-        //  Get out if item doesn't exist
-        if (!item) return
-        if(!handleAdd(item)) return
-
-        //  Call addContentItem method
-        addContentItem(item)
-        //  Reset the item in state
-        //  Reset name and value, keep the selected option though. (spread operator)
-        setItem({
-            ...item,
-            name: "",
-            value: 0,
-           })
-    }
-
-    //  Quick little function to check if a value is in fact a number
-    const isNumber = (n: any) => { return !isNaN(parseFloat(n)) && !isNaN(n-0) }
-
-    const handleChange = (e: any) => {
-        //  Sets the value of input item.
-        //  Uses spread operator to leave the other values unchanged.
-        //  Updates the property based on the name of input element
-        //  Input element would be required to have the name property set, or this wouldn't work. 
-        setItem({
-            ...item,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleItemValueChange = (e: string) => {
-        //  Only set the value if this a number
-        if(isNumber(e)) 
-            setItem({...item, value: +e })
-    }
+   const handleSaveItem = (e: FormEvent, formData: ContentItem | any) => {
+       e.preventDefault()
+       saveItem(formData) 
+   }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Grid templateColumns="repeat(4, 1fr)" gap={4} padding={4}>
+        <form onSubmit={(e) => handleSaveItem(e, formData)}>
+            <input onChange={handleFormData} type="text" id="name" name="name" placeholder="Item Name" />
+            {/* <Grid templateColumns="repeat(4, 1fr)" gap={4} padding={4}>
                 <Input type="text" name="name" placeholder="Item Name" value={item.name} onChange={handleChange} />
                 <NumberInput defaultValue={0} min={0} name="value" value={item.value} onChange={handleItemValueChange}>
                     <NumberInputField />
@@ -94,7 +38,8 @@ const AddItem = ({addContentItem}: AddItemProps) => {
                     <option value="Animal">Animal</option>
                 </Select>
                 <Button variant="outline" colorScheme="blue" type="submit">Add</Button>
-            </Grid>
+            </Grid> */}
+            <button disabled={formData === undefined ? true : false}>Add Item</button>
         </form>
     )
 }
