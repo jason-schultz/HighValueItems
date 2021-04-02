@@ -6,11 +6,11 @@ import CategoryHeader from './CategoryHeader'
 type ItemListProps = {
     items: Array<ContentItem>,
     loading: boolean,
-    onRemove: (item: ContentItem) => void
+    // onRemove: (item: ContentItem) => void
 }
 
 
-const ItemList = ({items, loading, onRemove}: ItemListProps) => {
+const ItemList = ({items, loading/*, onRemove*/}: ItemListProps) => {
 
     /*
         Reduce the Array of items down to an object that contains the category as the key

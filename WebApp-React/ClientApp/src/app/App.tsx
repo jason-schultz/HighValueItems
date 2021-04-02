@@ -10,7 +10,7 @@ function App() {
       <Header />
           <div style={{
             position: 'absolute', left: '50%',transform: 'translate(-50%)' }}>
-              {/* <Container /> */}
+              <Container />
           </div>
     </div>
   );

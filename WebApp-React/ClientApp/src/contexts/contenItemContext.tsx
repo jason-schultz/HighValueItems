@@ -7,33 +7,33 @@ type ContentItemProviderProps = {
     children: React.ReactNode
 }
 const ContentItemProvider = (children: ReactNode) => {
-    const [items, setItems] = useState<Array<ContentItem>>();
+    // const [items, setItems] = useState<Array<ContentItem>>();
 
-    const saveItem = (item: ContentItem) => {
-        const newItem: ContentItem = {
+    // const saveItem = (item: ContentItem) => {
+    //     const newItem: ContentItem = {
 
-        }
+    //     }
 
-        setItems([...items, newItem])
-    }
+    //     setItems([...items, newItem])
+    // }
 
-    const updateItem = (id: string) => {
-        items.filter((x: ContentItem) => {
-            if(x.id === id) {
+    // const updateItem = (id: string) => {
+    //     items.filter((x: ContentItem) => {
+    //         if(x.id === id) {
 
-            }
-            setItems([...items])
-        })
-    }
+    //         }
+    //         setItems([...items])
+    //     })
+    // }
 
-    const deleteItem = (id: string) => {
-        const newList = items.filter(x => x.id === id)
-        setItems([...newList])
-    }
+    // const deleteItem = (id: string) => {
+    //     const newList = items.filter(x => x.id === id)
+    //     setItems([...newList])
+    // }
 
-    return (
-        {children}
-    )
+    // return (
+    //     {children}
+    // )
 }
 
 export default ContentItemProvider
