@@ -1,4 +1,5 @@
 {
     "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "FiraCode-Retina,Menlo, Monaco, 'Courier New', monospace"
 }
