@@ -11,14 +11,14 @@ class API {
         return response.json()
     }
 
-    async post(endpoint: string, data: ContentItem): Promise<Response> {
+    async post(endpoint: string, data: ContentItem): Promise<ContentItem> {
         const response = await fetch(this.BASE_ROUTE + `${endpoint}`, { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
 
-        return response
+        return response.json()
     }
 
     async delete(endpoint: string): Promise<Response> {
