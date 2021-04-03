@@ -8,10 +8,10 @@ const AddItem = () => {
 //    const { saveItem } = useContext(ContentItemContext) as ContentItemContextType
    const [ formData, setFormData ] = useState<ContentItem | {}>()
 
-   const handleFormData = (e: FormEvent<HTMLInputElement>): void => {
+   const handleFormData = (e: FormEvent<HTMLInputElement | HTMLSelectElement>): void => {
        setFormData({
            ...formData,
-           [e.currentTarget.id]: e.currentTarget.value
+           [e.currentTarget.id]: e.currentTarget.id === 'value' ? +e.currentTarget.value : e.currentTarget.value
        })
    }
 
@@ -23,14 +23,24 @@ const AddItem = () => {
 
     return (
         <form className="m-6" onSubmit={(e) => handleSaveItem(e, formData)}>
-            <div className="flex flex-row">
-                <div className="flex flex-col mb-4 px-4">
+            <div className="flex flex-row p-4">
+                <div className="flex flex-col mb-4">
                     <label className="mb-2 uppercase font-bold text-lg text-gray-900">Item Name</label>
                     <input className="border py-2 px-3 text-gray-900 focus:outline-none" onChange={handleFormData} type="text" id="name" name="name" placeholder="Item Name" />
                 </div>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 uppercase font-bold text-lg text-gray-900">Item Value</label>
-                    <input className="border py-2 px-3 text-gray-900 focus:outline-none" onChange={handleFormData} type="number"></input>
+                    <input className="border py-2 px-3 text-gray-900 focus:outline-none" onChange={handleFormData} type="number" id="value" name="value"></input>
+                </div>
+                <div className="flex flex-col mb-4">
+                    <label className="mb-2 uppercase font-bold text-lg text-gray-900">Category</label>
+                    <select className="border py-2 px-3 text-gray-900 focus:outline-none" onChange={handleFormData} id="category" name="category">
+                        <option value="Catch All">Catch All</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Garage">Garage</option>
+                        <option value="Yard">Yard</option>
+                        <option value="Living Room">Living Room</option>
+                    </select>
                 </div>
             </div>
             
