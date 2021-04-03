@@ -56,4 +56,5 @@ export const addItem = (item: ContentItem): AppThunk => async (dispatch) => {
 
 export const { itemsLoading, loadContentItems, addContentItem, deleteContentItem } = contentItemSlice.actions
 export const selectItems = (state: RootState) => state.items
+//export const selectLoading = (state: RootState) => state.items.loading
 export default contentItemSlice.reducer
