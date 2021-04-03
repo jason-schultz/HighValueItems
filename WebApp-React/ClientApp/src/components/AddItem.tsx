@@ -30,7 +30,7 @@ const AddItem = () => {
                 </div>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 uppercase font-bold text-lg text-gray-900">Item Value</label>
-                    <input className="border py-2 px-3 text-gray-900 focus:outline-none" type="number"></input>
+                    <input className="border py-2 px-3 text-gray-900 focus:outline-none" onChange={handleFormData} type="number"></input>
                 </div>
             </div>
             

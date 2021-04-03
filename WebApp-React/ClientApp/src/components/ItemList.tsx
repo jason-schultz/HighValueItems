@@ -25,7 +25,15 @@ const ItemList = ({items, loading/*, onRemove*/}: ItemListProps) => {
    
     const renderResults = () => {
         return ( 
-            <></>        
+            <div className="">
+                {items.length > 0 ? 
+                    Object.keys(categories).map(cat => (
+                        <CategoryHeader key={cat} text={cat} items={categories[cat]} />
+                    )) : (
+                        <div>no items in the list</div>
+                    )
+                }
+            </div>   
         )
     }
 

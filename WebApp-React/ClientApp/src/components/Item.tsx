@@ -4,10 +4,10 @@ import { ContentItem } from '../models/ContentItem'
 
 type ItemProps = {
     item: ContentItem,
-    onRemove: (item: ContentItem) => void
+    //onRemove: (item: ContentItem) => void
 }
 
-const Item = ({item, onRemove}: ItemProps) => {
+const Item = ({item}: ItemProps) => {
     return (<></>
         // <Grid border="thin" borderColor="black" templateColumns="repeat(4, 1fr)" gap={3}>
         //     <GridItem colSpan={2}>
