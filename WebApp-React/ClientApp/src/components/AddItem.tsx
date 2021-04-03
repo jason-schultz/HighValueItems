@@ -5,10 +5,19 @@ import { addItem } from './state/contentItemSlice'
 
 const AddItem = () => {
     const dispatch = useDispatch()
-//    const { saveItem } = useContext(ContentItemContext) as ContentItemContextType
    const [ formData, setFormData ] = useState<ContentItem | {}>()
 
    const handleFormData = (e: FormEvent<HTMLInputElement | HTMLSelectElement>): void => {
+       //   Set form data
+       //   If currentTarget is 'value', format it as a number.
+       //   otherwise leave it alone.
+       //   Question.. should the UI care about the format of the form value?
+       //   should the UI just pass values, and let the logic figure out the format
+       //   This seems kind of smelly, and the form is pretty much tied to this specific use case.
+       //   Maybe pull setFormData out, and add some form attributes to decouple the setFormData method
+       //   so it's resuable in other parts of the application
+       //   But does this make the model more complicated than it needs to be?
+       //   Should the model be "smart"? Feel as though models should be fairly dumb.
        setFormData({
            ...formData,
            [e.currentTarget.id]: e.currentTarget.id === 'value' ? +e.currentTarget.value : e.currentTarget.value
@@ -18,7 +27,6 @@ const AddItem = () => {
    const handleSaveItem = (e: FormEvent, formData: ContentItem | any) => {
        e.preventDefault()
        dispatch(addItem(formData))
-       //saveItem(formData) 
    }
 
     return (
@@ -40,29 +48,10 @@ const AddItem = () => {
                         <option value="Garage">Garage</option>
                         <option value="Yard">Yard</option>
                         <option value="Living Room">Living Room</option>
+                        <option value="Pets">Pets</option>
                     </select>
                 </div>
             </div>
-            
-            
-            {/* <Grid templateColumns="repeat(4, 1fr)" gap={4} padding={4}>
-                <Input type="text" name="name" placeholder="Item Name" value={item.name} onChange={handleChange} />
-                <NumberInput defaultValue={0} min={0} name="value" value={item.value} onChange={handleItemValueChange}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                    </NumberInputStepper>
-                </NumberInput>
-                <Select name="category" value={item.category} onChange={handleChange}>    
-                    <option value="">Select...</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Clothing">Clothing</option>
-                    <option value="Kitchen">Kitchen</option>
-                    <option value="Animal">Animal</option>
-                </Select>
-                <Button variant="outline" colorScheme="blue" type="submit">Add</Button>
-            </Grid> */}
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:ring focus:ring-blue-200 ring-inset" 
                 disabled={formData === undefined ? true : false}>
                 Add Item
