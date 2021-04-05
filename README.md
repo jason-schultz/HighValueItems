@@ -17,4 +17,6 @@ Notification compoent
 
 Docker
 
-Having an issue with docker compose on Apple Silicon currently. Not sure if docker is working with apple m1 chips properly right now (04/04/2021)
+Having an issue with docker compose on Apple Silicon currently. Something about not being able to mount the image
+Docker compose works on intel chips properly though. 
+(04/04/2021)
