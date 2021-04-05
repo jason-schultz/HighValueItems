@@ -8,9 +8,13 @@ This was a project which was developed as an assignment for a employeer.
 Project has been modified from what was submitted.
 
 Submitted project didn't include:
+---------------------------------
 Redux
+
 Tailwindcss
+
 Notification compoent
+
 Docker
 
 Having an issue with docker compose on Apple Silicon currently. Not sure if docker is working with apple m1 chips properly right now (04/04/2021)
