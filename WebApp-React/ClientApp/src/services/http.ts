@@ -16,8 +16,10 @@ export default class Http<T> {
         this.dispatch(displayError(errString))
     }
 
-    async Post(): Promise<HttpResponse<T>> {
+    async Post(request: RequestInfo): Promise<HttpResponse<T>> {
+        const res: HttpResponse<T> = await fetch(request)
 
+        return res
     }
 
     async Get(request: RequestInfo): Promise<HttpResponse<T>> {
