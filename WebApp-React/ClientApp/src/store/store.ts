@@ -1,9 +1,12 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import contentItemReducer from '../components/state/contentItemSlice'
+import contentItemReducer from '../state/contentItemSlice'
+import errorReducer from '../state/errorSlice'
+
 
 export const store = configureStore({
     reducer: {
-        items: contentItemReducer
+        items: contentItemReducer,
+        error: errorReducer
     }
 })
 

@@ -1,7 +1,7 @@
 ﻿import React, { FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ContentItem } from '../models/ContentItem'
-import { addItem } from './state/contentItemSlice'
+import { addItem } from '../state/contentItemSlice'
 
 const AddItem = () => {
     const dispatch = useDispatch()

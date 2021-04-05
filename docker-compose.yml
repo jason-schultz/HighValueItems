@@ -11,7 +11,4 @@ services:
     environment: 
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
-    command: mongod
-    dns:  
-      - 192.168.65.0
     

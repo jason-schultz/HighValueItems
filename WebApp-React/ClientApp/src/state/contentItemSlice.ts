@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ContentItem } from '../../models/ContentItem'
-import API from '../../services/service'
-import type { AppThunk, RootState } from '../../store/store'
+import { ContentItem } from '../models/ContentItem'
+import API from '../services/service'
+import type { AppThunk, RootState } from '../store/store'
 
 //  Define a type for the slice state
 interface ContentItemState {

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AddItem from './AddItem'
 import ItemList from './ItemList'
 //import ItemList from './ItemList'
-import { fetchItems, selectItems } from './state/contentItemSlice'
+import { fetchItems, selectItems } from '../state/contentItemSlice'
 
 //const api = new API()
 
