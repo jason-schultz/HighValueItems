@@ -1,22 +1,26 @@
-﻿import React from 'react'
+﻿import React, { useEffect } from 'react'
 import { ContentItem } from '../models/ContentItem'
 import Item from './Item'
 import CategoryHeader from './CategoryHeader'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchItems, selectItems } from '../state/contentItemSlice'
 
-type ItemListProps = {
-    items: Array<ContentItem>,
-    loading: boolean,
-    // onRemove: (item: ContentItem) => void
-}
+const ItemList = () => {
 
+    const dispatch = useDispatch()
+    const { items } = useSelector(selectItems)
 
-const ItemList = ({items, loading/*, onRemove*/}: ItemListProps) => {
+    useEffect(() => {
+        //fetchItems()
+        dispatch(fetchItems())
+        // new API().get('contentitem/items').then(res => setList({items: res, loading: false}))
+    }, [dispatch])
 
     /*
         Reduce the Array of items down to an object that contains the category as the key
         for the value which is an array of the items that belong to key (category)
     */
-    const categories = items.reduce((acc: {[key: string]: Array<ContentItem>}, curr: ContentItem) => {
+    const categories = items?.reduce((acc: {[key: string]: Array<ContentItem>}, curr: ContentItem) => {
         acc[curr.category] = acc[curr.category] || []
         acc[curr.category].push(curr)
         return acc
@@ -26,7 +30,7 @@ const ItemList = ({items, loading/*, onRemove*/}: ItemListProps) => {
     const renderResults = () => {
         return ( 
             <div className="">
-                {items.length > 0 ? 
+                {(items && categories) ? 
                     Object.keys(categories).map(cat => (
                         <CategoryHeader key={cat} text={cat} items={categories[cat]} />
                     )) : (
@@ -37,7 +41,7 @@ const ItemList = ({items, loading/*, onRemove*/}: ItemListProps) => {
         )
     }
 
-    let contents = loading ? <p><em>Loading...</em></p> : renderResults()
+    let contents = items ? <p><em>Loading...</em></p> : renderResults()
 
     return (
         <div>

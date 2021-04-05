@@ -11,23 +11,16 @@ import { fetchItems, selectItems } from '../state/contentItemSlice'
 //const api = new API()
 
 const Container = () => {
-    const dispatch = useDispatch()
-    const { items } = useSelector(selectItems)
+   
     //const { loading } = useSelector(selectLoading)
     //const [list, setList] = useState<{ items: Array<ContentItem>, loading: boolean}>({ items: [], loading: true})
     // const toast = useToast()
-
-    useEffect(() => {
-        //fetchItems()
-        dispatch(fetchItems())
-        // new API().get('contentitem/items').then(res => setList({items: res, loading: false}))
-    }, [dispatch])
 
     return (
         // <ContentItemProvider>
         <>
             <AddItem></AddItem>
-            <ItemList items={items} loading={items.length > 0} />
+            <ItemList />
         </>
         // </ContentItemProvider>
         // <Box width="400" border="1px" borderColor="black">
