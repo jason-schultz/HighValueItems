@@ -43,16 +43,22 @@ export const contentItemSlice = createSlice({
 
 export const fetchItems = (): AppThunk => async (dispatch) => {
     dispatch(itemsLoading())
-    const response = await new Http<any>().Get('contentitem/items')
+    const response = await new Http<ContentItem[]>().Get('contentitem/items')
     //const response = await api.get('contentitem/items')
-    dispatch(loadContentItems(response.parsedBody))
+    var items = response.parsedBody as Array<ContentItem>
+    (items) ? 
+        dispatch(loadContentItems(items)) : 
+        console.log(`couldn't load items`)
 }
 
 export const addItem = (item: ContentItem): AppThunk => async (dispatch) => {
     const response = await new Http<ContentItem>().Post('contentitem/item', item)
     //const response = await api.post('contentitem/item', item)
-    var newItem = response.parsedBody
-    dispatch(addContentItem(newItem))
+    var newItem = response.parsedBody as ContentItem
+    (newItem) ? 
+        dispatch(addContentItem(newItem)) 
+        : console.log(`couldn't get content item from api call`)
+    //dispatch(addContentItem(newItem))
     // dispatch(addContentItem(response.json()))
 }
 
