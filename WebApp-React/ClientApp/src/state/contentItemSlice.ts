@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { stat } from 'fs'
 import { ContentItem } from '../models/ContentItem'
+import Http from '../services/http'
 import API from '../services/service'
 import type { AppThunk, RootState } from '../store/store'
 
 //  Define a type for the slice state
 interface ContentItemState {
-    items: Array<ContentItem>,
+    items?: Array<ContentItem>,
     loading: string
 }
 
@@ -31,25 +33,25 @@ export const contentItemSlice = createSlice({
             }
         },
         addContentItem: (state, action: PayloadAction<ContentItem>) => {
-            state.items.push(action.payload)
+            state.items ? state.items.push(action.payload) : state.items = [action.payload]
         },
         deleteContentItem: (state, action: PayloadAction<string>) => {
-            state.items = state.items.filter(x => x.id !== action.payload)
+            state.items = state.items?.filter(x => x.id !== action.payload)
         }
     }
 })
 
-const api = new API()
-
 export const fetchItems = (): AppThunk => async (dispatch) => {
     dispatch(itemsLoading())
-    const response = await api.get('contentitem/items')
-    dispatch(loadContentItems(response))
+    const response = await new Http<any>().Get('contentitem/items')
+    //const response = await api.get('contentitem/items')
+    dispatch(loadContentItems(response.parsedBody))
 }
 
 export const addItem = (item: ContentItem): AppThunk => async (dispatch) => {
-    const response = await api.post('contentitem/item', item)
-    var newItem = response
+    const response = await new Http<ContentItem>().Post('contentitem/item', item)
+    //const response = await api.post('contentitem/item', item)
+    var newItem = response.parsedBody
     dispatch(addContentItem(newItem))
     // dispatch(addContentItem(response.json()))
 }

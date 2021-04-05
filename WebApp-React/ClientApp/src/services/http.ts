@@ -16,14 +16,23 @@ export default class Http<T> {
         this.dispatch(displayError(errString))
     }
 
-    async Post(request: RequestInfo): Promise<HttpResponse<T>> {
-        const res: HttpResponse<T> = await fetch(request)
+    async Post(endPoint: string, slug: any): Promise<HttpResponse<T>> {
+
+        const res: HttpResponse<T> = await fetch(this.BASE_URL + endPoint, {
+            method: 'post',
+            body: JSON.stringify(slug)
+        })
+
+        try {
+            res.parsedBody = await res.json()
+        } catch(ex) {}
+        if(!res.ok) this.handleError(res)
 
         return res
     }
 
-    async Get(request: RequestInfo): Promise<HttpResponse<T>> {
-        const res: HttpResponse<T> = await fetch(request)
+    async Get(endPoint: string): Promise<HttpResponse<T>> {
+        const res: HttpResponse<T> = await fetch(endPoint, { method: 'get' })
         try {
             res.parsedBody = await res.json()
         } catch(ex) {}
