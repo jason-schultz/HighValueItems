@@ -1,60 +1,40 @@
-import { useDispatch } from "react-redux"
-import { displayError } from "../state/errorSlice"
-
 interface HttpResponse<T> extends Response {
     parsedBody?: T
 }
 
-export default class Http<T> {
-    private dispatch = useDispatch()
+async function http<T>(endPoint: string, args: RequestInit): Promise<HttpResponse<T>> {
+    //  This window.location.href will only work if the service end points are on the same server as the web app.
+    const BASE_URL: string = window.location.href
+    const response: HttpResponse<T> = await fetch(BASE_URL + endPoint, args)
 
-    constructor(private BASE_URL: string = window.location.href + 'api/v1') {}
+    try{
+        response.parsedBody = await response.json()
+    } catch (err) {}
+    if(!response.ok) throw new Error(response.statusText)
 
-    private handleError(res: HttpResponse<T>) 
-    {
-        const errString = `Status: ${res.statusText}` + `\nError: ${res.text}`
-        this.dispatch(displayError(errString))
-    }
-
-    async Post(endPoint: string, slug: any): Promise<HttpResponse<T>> {
-
-        const res: HttpResponse<T> = await fetch(this.BASE_URL + endPoint, {
-            method: 'post',
-            body: JSON.stringify(slug)
-        })
-
-        try {
-            res.parsedBody = await res.json()
-        } catch(ex) {}
-        if(!res.ok) this.handleError(res)
-
-        return res
-    }
-
-    async Get(endPoint: string): Promise<HttpResponse<T>> {
-        const res: HttpResponse<T> = await fetch(endPoint, { method: 'get' })
-        try {
-            res.parsedBody = await res.json()
-        } catch(ex) {}
-
-        if(!res.ok)
-            this.handleError(res)
-        
-        return res
-    }
+    return response
 }
 
-export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
-    const dispatch = useDispatch()
-    const response: HttpResponse<T> = await fetch(request)
-    
-    try {
-        response.parsedBody = await response.json()
-    } catch (ex) {}
+export async function get<T>(endPoint: string, args: RequestInit = { method: 'get' }): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, args)
+}
 
-    if(!response.ok) {
-        const errorString = `Status ${response.statusText}` + `\nError: ${response.text}`
-        dispatch(displayError(errorString))
+export async function post<T>(endPoint: string, body: any, args?: RequestInit): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, {
+        method: 'post', 
+        body: JSON.stringify(body), 
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        ...args
     }
-    return response
+    )
+}
+
+export async function put<T>(endPoint: string, body: any, args: RequestInit = { method: 'put', body: JSON.stringify(body)}): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, args)
+}
+
+export async function remove<T>(endPoint: string, body: any, args: RequestInit = { method: 'delete', body: JSON.stringify(body)}): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, args)
 }

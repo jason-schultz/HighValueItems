@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from 'react'
 import { ContentItem } from '../models/ContentItem'
-import Item from './Item'
+//import Item from './Item'
 import CategoryHeader from './CategoryHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchItems, selectItems } from '../state/contentItemSlice'
@@ -11,9 +11,7 @@ const ItemList = () => {
     const { items } = useSelector(selectItems)
 
     useEffect(() => {
-        //fetchItems()
         dispatch(fetchItems())
-        // new API().get('contentitem/items').then(res => setList({items: res, loading: false}))
     }, [dispatch])
 
     /*
@@ -30,7 +28,7 @@ const ItemList = () => {
     const renderResults = () => {
         return ( 
             <div className="">
-                {(items && categories) ? 
+                {(items && items.length > 0) ? 
                     Object.keys(categories).map(cat => (
                         <CategoryHeader key={cat} text={cat} items={categories[cat]} />
                     )) : (
@@ -41,7 +39,7 @@ const ItemList = () => {
         )
     }
 
-    let contents = items ? <p><em>Loading...</em></p> : renderResults()
+    let contents = items ? renderResults() : <p>Loading....</p>
 
     return (
         <div>

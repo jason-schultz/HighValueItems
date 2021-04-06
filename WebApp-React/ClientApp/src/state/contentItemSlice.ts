@@ -1,20 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { stat } from 'fs'
 import { ContentItem } from '../models/ContentItem'
-import Http from '../services/http'
-import API from '../services/service'
+import { get, post } from '../services/http'
 import type { AppThunk, RootState } from '../store/store'
+import { displayError } from './errorSlice'
 
 //  Define a type for the slice state
 interface ContentItemState {
-    items?: Array<ContentItem>,
-    loading: string
+    items: Array<ContentItem>,
+    loading: string,
+    error: any
 }
 
 //  Define the initial state useing the State Type
 const initialState: ContentItemState = {
     items: [],
-    loading: 'idle'
+    loading: 'idle',
+    error: null
 } as ContentItemState
 
 export const contentItemSlice = createSlice({
@@ -43,23 +44,21 @@ export const contentItemSlice = createSlice({
 
 export const fetchItems = (): AppThunk => async (dispatch) => {
     dispatch(itemsLoading())
-    const response = await new Http<ContentItem[]>().Get('contentitem/items')
-    //const response = await api.get('contentitem/items')
-    var items = response.parsedBody as Array<ContentItem>
-    (items) ? 
-        dispatch(loadContentItems(items)) : 
-        console.log(`couldn't load items`)
+    await get<Array<ContentItem>>('contentitem/items')
+    .then(res => { 
+        const data = res.parsedBody as Array<ContentItem>
+        dispatch(loadContentItems(data))
+    })
+    .catch((err: Error) => dispatch(displayError(err.message)))
 }
 
 export const addItem = (item: ContentItem): AppThunk => async (dispatch) => {
-    const response = await new Http<ContentItem>().Post('contentitem/item', item)
-    //const response = await api.post('contentitem/item', item)
-    var newItem = response.parsedBody as ContentItem
-    (newItem) ? 
-        dispatch(addContentItem(newItem)) 
-        : console.log(`couldn't get content item from api call`)
-    //dispatch(addContentItem(newItem))
-    // dispatch(addContentItem(response.json()))
+    await post<ContentItem>('contentitem/item', item)
+    .then(res => {
+        const newItem = res.parsedBody as ContentItem
+        dispatch(addContentItem(newItem))
+    })
+    .catch((err: Error) => dispatch(displayError(err.message)))
 }
 
 export const { itemsLoading, loadContentItems, addContentItem, deleteContentItem } = contentItemSlice.actions
