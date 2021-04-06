@@ -5,7 +5,15 @@ interface HttpResponse<T> extends Response {
 async function http<T>(endPoint: string, args: RequestInit): Promise<HttpResponse<T>> {
     //  This window.location.href will only work if the service end points are on the same server as the web app.
     const BASE_URL: string = window.location.href
-    const response: HttpResponse<T> = await fetch(BASE_URL + endPoint, args)
+    const response: HttpResponse<T> = await fetch(BASE_URL + endPoint,
+        //  Default headers to application/json
+        //  Allow args to overwrite if something else is needed 
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            ...args
+        })
 
     try{
         response.parsedBody = await response.json()
@@ -22,10 +30,7 @@ export async function get<T>(endPoint: string, args: RequestInit = { method: 'ge
 export async function post<T>(endPoint: string, body: any, args?: RequestInit): Promise<HttpResponse<T>> {
     return await http<T>(endPoint, {
         method: 'post', 
-        body: JSON.stringify(body), 
-        headers: { 
-            'Content-Type': 'application/json'
-        },
+        body: JSON.stringify(body),
         ...args
     }
     )
