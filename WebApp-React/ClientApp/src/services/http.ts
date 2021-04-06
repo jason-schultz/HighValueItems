@@ -32,14 +32,21 @@ export async function post<T>(endPoint: string, body: any, args?: RequestInit): 
         method: 'post', 
         body: JSON.stringify(body),
         ...args
-    }
-    )
+    })
 }
 
-export async function put<T>(endPoint: string, body: any, args: RequestInit = { method: 'put', body: JSON.stringify(body)}): Promise<HttpResponse<T>> {
-    return await http<T>(endPoint, args)
+export async function put<T>(endPoint: string, body: any, args?: RequestInit): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, {
+        method: 'put',
+        body: JSON.stringify(body),
+        ...args
+    })
 }
 
-export async function remove<T>(endPoint: string, body: any, args: RequestInit = { method: 'delete', body: JSON.stringify(body)}): Promise<HttpResponse<T>> {
-    return await http<T>(endPoint, args)
+export async function remove<T>(endPoint: string, body: any, args?: RequestInit): Promise<HttpResponse<T>> {
+    return await http<T>(endPoint, { 
+        method: 'delete',
+        body: JSON.stringify(body),
+        ...args
+    })
 }
