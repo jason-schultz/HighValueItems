@@ -25,7 +25,7 @@ async function http<T>(endPoint: string, args: RequestInit): Promise<HttpRespons
 
 export async function get<T>(endPoint: string, args?: RequestInit): Promise<HttpResponse<T>> {
     return await http<T>(endPoint, {
-        method: 'post',
+        method: 'get',
         ...args
     })
 }
